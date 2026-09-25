@@ -1,0 +1,856 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartPark - Parking Management System</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         HEADER / NAVIGATION
+         ========================================================= -->
+    <header class="main-header">
+
+        <div class="logo">
+            <span class="logo-car">🚗</span>
+            <span class="logo-name">SmartPark</span>
+        </div>
+
+        <nav class="navigation">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#parking">Parking Slots</a>
+            <a href="#entry">Vehicle Entry</a>
+            <a href="#vehicles">Parked Vehicles</a>
+            <a href="#history">History</a>
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
+    <main>
+
+        <!-- =====================================================
+             DASHBOARD
+             ===================================================== -->
+        <section
+            id="dashboard"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <h1>
+                    Smart Parking Management
+                </h1>
+
+                <p>
+                    Welcome to SmartPark — your smart and efficient
+                    parking management system.
+                </p>
+
+            </div>
+
+
+            <div class="dashboard">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🅿️
+                    </div>
+
+                    <div>
+                        <h3>Total Spaces</h3>
+                        <p id="totalSpaces">0</p>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✅
+                    </div>
+
+                    <div>
+                        <h3>Available</h3>
+                        <p id="availableSpaces">0</p>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🚘
+                    </div>
+
+                    <div>
+                        <h3>Occupied</h3>
+                        <p id="occupiedSpaces">0</p>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        💰
+                    </div>
+
+                    <div>
+                        <h3>Total Revenue</h3>
+
+                        <p>
+                            Ksh
+                            <span id="totalRevenue">
+                                0
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             PARKING SLOTS
+             ===================================================== -->
+        <section
+            id="parking"
+            class="content-section"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Parking Slots
+                    </h2>
+
+                    <p>
+                        View available and occupied parking spaces.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="parkingGrid"
+                class="parking-grid"
+            ></div>
+
+
+            <div class="parking-legend">
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-box available-box"
+                    ></span>
+
+                    Available
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-box occupied-box"
+                    ></span>
+
+                    Occupied
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             VEHICLE ENTRY
+             ===================================================== -->
+        <section
+            id="entry"
+            class="content-section"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Record Vehicle Entry
+                    </h2>
+
+                    <p>
+                        Enter the driver's information and vehicle details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                id="entryForm"
+                class="entry-form"
+            >
+
+                <!-- Driver Name -->
+                <div class="form-group">
+
+                    <label for="driverName">
+                        Driver Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="driverName"
+                        placeholder="e.g. Amina Hassan"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Vehicle Type -->
+                <div class="form-group">
+
+                    <label for="vehicleType">
+                        Vehicle Type
+                    </label>
+
+                    <select
+                        id="vehicleType"
+                        required
+                        onchange="loadAvailableSpaces(this.value)"
+                    >
+
+                        <option value="">
+                            Select vehicle type
+                        </option>
+
+                        <option value="Small Car">
+                            🚗 Small Car
+                        </option>
+
+                        <option value="SUV / 4x4">
+                            🚙 SUV / 4x4
+                        </option>
+
+                        <option value="Motorcycle">
+                            🏍️ Motorcycle
+                        </option>
+
+                        <option value="Van / Minibus">
+                            🚐 Van / Minibus
+                        </option>
+
+                        <option value="Truck">
+                            🚛 Truck
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Plate Number -->
+                <div class="form-group">
+
+                    <label for="plateNumber">
+                        Plate Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="plateNumber"
+                        placeholder="e.g. KDA 123A"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Parking Space -->
+                <div class="form-group">
+
+                    <label for="spaceNumber">
+                        Parking Space
+                    </label>
+
+                    <select
+                        id="spaceNumber"
+                        required
+                    >
+
+                        <option value="">
+                            Select a vehicle type first
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Submit -->
+                <div class="form-button">
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        🚗 Park Vehicle
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <p
+                id="entryMessage"
+                class="form-message"
+            ></p>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CURRENTLY PARKED VEHICLES
+             ===================================================== -->
+        <section
+            id="vehicles"
+            class="content-section"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Currently Parked Vehicles
+                    </h2>
+
+                    <p>
+                        Vehicles currently inside the parking area.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Ticket</th>
+                            <th>Driver</th>
+                            <th>Plate Number</th>
+                            <th>Vehicle Type</th>
+                            <th>Parking Space</th>
+                            <th>Time In</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="vehicleTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             PARKING HISTORY
+             ===================================================== -->
+        <section
+            id="history"
+            class="content-section"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Parking History
+                    </h2>
+
+                    <p>
+                        View vehicles that have already exited.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Ticket</th>
+                            <th>Driver</th>
+                            <th>Plate Number</th>
+                            <th>Vehicle Type</th>
+                            <th>Space</th>
+                            <th>Time In</th>
+                            <th>Time Out</th>
+                            <th>Duration</th>
+                            <th>Fee</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="historyTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         PAYMENT MODAL
+         ========================================================= -->
+    <div
+        id="paymentModal"
+        class="payment-modal"
+    >
+
+        <div class="payment-box">
+
+            <button
+                class="close-payment"
+                onclick="closePaymentModal()"
+                type="button"
+            >
+                ×
+            </button>
+
+
+            <h2>
+                💳 Parking Payment
+            </h2>
+
+            <p class="payment-subtitle">
+                Complete payment to finish the parking session.
+            </p>
+
+
+            <div class="payment-summary">
+
+                <div>
+
+                    <span>
+                        Vehicle
+                    </span>
+
+                    <strong id="paymentPlate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Time Spent
+                    </span>
+
+                    <strong id="paymentDuration">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Amount Due
+                    </span>
+
+                    <strong>
+                        Ksh
+                        <span id="paymentAmount">
+                            0
+                        </span>
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="paymentMethod">
+                    Payment Method
+                </label>
+
+                <select
+                    id="paymentMethod"
+                    onchange="showPaymentFields()"
+                >
+
+                    <option value="">
+                        Select payment method
+                    </option>
+
+                    <option value="mpesa">
+                        📱 M-Pesa
+                    </option>
+
+                    <option value="cash">
+                        💵 Cash
+                    </option>
+
+                    <option value="card">
+                        💳 Card
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- M-PESA -->
+            <div
+                id="mpesaFields"
+                class="payment-extra"
+            >
+
+                <label for="mpesaNumber">
+                    M-Pesa Phone Number
+                </label>
+
+                <input
+                    type="text"
+                    id="mpesaNumber"
+                    placeholder="e.g. 0712345678"
+                >
+
+            </div>
+
+
+            <!-- CARD -->
+            <div
+                id="cardFields"
+                class="payment-extra"
+            >
+
+                <label for="cardNumber">
+                    Card Number
+                </label>
+
+                <input
+                    type="text"
+                    id="cardNumber"
+                    placeholder="Enter card number"
+                >
+
+            </div>
+
+
+            <button
+                class="pay-button"
+                onclick="makePayment()"
+                type="button"
+            >
+                💳 Pay Now
+            </button>
+
+
+            <p id="paymentMessage"></p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         PARKING TICKET MODAL
+         ========================================================= -->
+    <div
+        id="ticketModal"
+        class="ticket-modal"
+    >
+
+        <div class="ticket-box">
+
+            <button
+                class="close-ticket"
+                onclick="closeTicketModal()"
+                type="button"
+            >
+                ×
+            </button>
+
+
+            <div class="ticket-header">
+
+                <div class="ticket-logo">
+                    🚗
+                </div>
+
+                <h2>
+                    SmartPark
+                </h2>
+
+                <p>
+                    Parking Ticket
+                </p>
+
+            </div>
+
+
+            <div class="ticket-number">
+
+                <span>
+                    Ticket Number
+                </span>
+
+                <strong id="ticketNumber">
+                    SP-000000
+                </strong>
+
+            </div>
+
+
+            <div class="ticket-details">
+
+                <div class="ticket-row">
+
+                    <span>
+                        Driver Name
+                    </span>
+
+                    <strong id="ticketDriver">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="ticket-row">
+
+                    <span>
+                        Plate Number
+                    </span>
+
+                    <strong id="ticketPlate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="ticket-row">
+
+                    <span>
+                        Vehicle Type
+                    </span>
+
+                    <strong id="ticketVehicleType">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="ticket-row">
+
+                    <span>
+                        Parking Space
+                    </span>
+
+                    <strong id="ticketSpace">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="ticket-row">
+
+                    <span>
+                        Time In
+                    </span>
+
+                    <strong id="ticketTimeIn">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="ticket-row">
+
+                    <span>
+                        Time Out
+                    </span>
+
+                    <strong id="ticketTimeOut">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="ticket-row">
+
+                    <span>
+                        Duration
+                    </span>
+
+                    <strong id="ticketDuration">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="ticket-row">
+
+                    <span>
+                        Parking Fee
+                    </span>
+
+                    <strong id="ticketFee">
+                        Ksh 0
+                    </strong>
+
+                </div>
+
+
+                <div class="ticket-row">
+
+                    <span>
+                        Payment Method
+                    </span>
+
+                    <strong id="ticketPaymentMethod">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="ticket-footer">
+
+                <p>
+                    Thank you for using SmartPark.
+                </p>
+
+                <p>
+                    Please keep this ticket for your records.
+                </p>
+
+            </div>
+
+
+            <button
+                class="print-ticket-button"
+                onclick="printTicket()"
+                type="button"
+            >
+                🖨️ Print Ticket
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+    <footer>
+
+        <div class="footer-logo">
+            🚗 SmartPark
+        </div>
+
+        <p>
+            Smart Parking Management System © 2026
+        </p>
+
+        <p>
+            Efficient • Secure • Smart
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
+    <!-- ?v=2 forces the browser to load the newest script -->
+    <script src="/script.js?v=2"></script>
+
+</body>
+
+</html>
